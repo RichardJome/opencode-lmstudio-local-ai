@@ -20,7 +20,7 @@
       }
     }
   },
-  "model": "lmstudio-community/Qwen2.5-7B-Qwen3_5-8B-GGUF/qwen3.5-9b-q4_K_M",
+  "model": "qwen3.5:9b",
   "permission": {
     "bash": "allow",
     "read": "allow",
@@ -43,12 +43,9 @@
   "mcp": {
     "enabled": true,
     "servers": {
-      "brave-search": {
+      "web-search": {
         "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-brave-search"],
-        "env": {
-          "BRAVE_API_KEY": "${BRAVE_API_KEY}"
-        }
+        "args": ["-y", "open-webSearch"]
       },
       "filesystem": {
         "command": "npx",
@@ -64,6 +61,14 @@
       "fetch": {
         "command": "npx",
         "args": ["-y", "@modelcontextprotocol/server-fetch"]
+      },
+      "sqlite": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-sqlite"]
+      },
+      "memory": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-memory"]
       }
     }
   }

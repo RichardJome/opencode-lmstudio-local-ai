@@ -31,16 +31,16 @@ This directory contains essential configuration files to set up OpenCode with a 
 4. **Important**: Set context length to at least 16384 (16K) or higher
 5. Server runs at `http://localhost:1234/v1`
 
-### 3. Set Environment Variables
+### 3. Set Environment Variables (Optional - for GitHub)
 
 ```cmd
-REM Windows - Create or edit %USERPROFILE%\.bashrc or use system settings
-set BRAVE_API_KEY=your_brave_api_key
+REM Windows - Only needed for GitHub operations
 set GITHUB_TOKEN=your_github_token
 ```
 
-Get Brave API key: https://brave.com/search/api/
-Get GitHub token: https://github.com/settings/tokens
+Get GitHub token: https://github.com/settings/tokens (repo scope)
+
+**Note: Web search is FREE - no API key needed!**
 
 ### 4. Copy Configuration
 
@@ -187,37 +187,30 @@ opencode
 
 ---
 
-## MCP Servers Included
+## MCP Servers Included (All FREE!)
 
 This setup includes these MCP servers pre-configured:
 
 | Server | Purpose | API Key Required |
 |--------|---------|------------------|
-| **brave-search** | Web search (your Exa alternative!) | Yes - brave.com |
+| **web-search** | FREE Web search (Google, Bing, DuckDuckGo, etc.) | NO - FREE! |
 | **filesystem** | File operations | No |
-| **github** | GitHub operations | Yes - GitHub token |
+| **github** | GitHub operations | Optional |
 | **fetch** | Web content retrieval | No |
+| **sqlite** | SQLite database queries | No |
+| **memory** | Persistent memory storage | No |
 
-### Brave Search Setup (Exa Alternative!)
+### FREE Web Search Setup (No API Key Needed!)
 
-**Get your free API key:**
-1. Go to https://brave.com/search/api/
-2. Sign up for account
-3. Generate API key
-4. Set environment variable:
-
-```cmd
-set BRAVE_API_KEY=your_api_key_here
-```
+The `web-search` MCP uses free search engines - no API key required!
 
 **What it provides:**
-- `brave_web_search` - General web search
-- `brave_local_search` - Local business search  
-- `brave_image_search` - Image search
-- `brave_video_search` - Video search
-- `brave_news_search` - News search
+- Google, Bing, DuckDuckGo search
+- GitHub code search
+- Baidu, Juejin support
+- All FREE!
 
-This is the BEST alternative to Exa for local AI!
+This is the BEST free alternative to Exa/Brave!
 
 ### GitHub Setup
 
@@ -238,12 +231,11 @@ Pre-configured skills in `.opencode/skills/`:
 | `deep-learning-setup` | PyTorch, TensorFlow, CUDA setup |
 | `rag-setup` | RAG pipeline with LangChain |
 | `github-operations` | Issues, PRs, releases |
-| `web-search` | Brave Search usage guide |
+| `web-search` | Free web search (no API key!) | npx -y open-webSearch |
+| `rag-setup` | RAG pipeline with LangChain |
 | `mlops-deployment` | Docker, MLflow, serving |
 
----
-
-## More MCP Servers You Can Add
+### More MCP Servers You Can Add
 
 ### Development
 | Server | Purpose | Command |
@@ -258,7 +250,6 @@ Pre-configured skills in `.opencode/skills/`:
 |--------|---------|---------|
 | `postgres` | PostgreSQL queries | npx @modelcontextprotocol/server-postgres |
 | `mysql` | MySQL queries | npx @modelcontextprotocol/server-mysql |
-| `sqlite` | SQLite queries | npx @modelcontextprotocol/server-sqlite |
 
 ### Browser & Automation
 | Server | Purpose | Command |
@@ -270,13 +261,27 @@ Pre-configured skills in `.opencode/skills/`:
 | Server | Purpose | Command |
 |--------|---------|---------|
 | `aws-kb` | AWS knowledge base | npx @modelcontextprotocol/server-aws-kb-retrieval |
-| `memory` | Persistent memory | npx @modelcontextprotocol/server-memory |
 
-### Search
+### FREE Search (No API Key!)
 | Server | Purpose | Command |
 |--------|---------|---------|
-| `brave-search` | Brave web search | npx @modelcontextprotocol/server-brave-search |
-| `serpapi` | Google search | npx @serpapi/server-serpapi |
+| `open-webSearch` | Multi-engine search | npx -y open-webSearch |
+| `duckduckgo` | DuckDuckGo search | npx -y @modelcontextprotocol/server-duckduckgo |
+
+---
+
+## More Skills You Can Add
+
+Based on awesome-agent-skills and janhq/awesome-local-ai:
+
+| Skill | Purpose | Source |
+|-------|---------|--------|
+| `kaggle` | Kaggle competition integration | anthropics/skills |
+| `d3-visualization` | D3.js charts | community |
+| `playwright-automation` | Browser testing | community |
+| `aws-cdk` | AWS development | community |
+| `swiftui` | Apple development | apple/swiftui-skills |
+| `huggingface-tools` | HF model training | huggingface/skills |
 
 ---
 
@@ -312,6 +317,53 @@ git push
 gh pr create
 gh issue list
 ```
+
+---
+
+## Local AI Tools Integration (from janhq/awesome-local-ai)
+
+### Inference Engines (Alternative to LM Studio)
+| Tool | Description |
+|------|-------------|
+| **Ollama** | CLI and local server - https://ollama.ai |
+| **llama.cpp** | Pure C/C++ inference - GGML/GGUF support |
+| **vLLM** | Fast inference and serving |
+| **text-generation-inference** | HuggingFace optimized |
+
+### Frameworks for Building AI Apps
+| Tool | Description |
+|------|-------------|
+| **LangChain** | LLM application framework |
+| **LlamaIndex** | Data framework for LLMs |
+| **Haystack** | NLP applications with LLMs |
+| **BentoML** | AI application framework |
+| **LiteLLM** | Unified API for 100+ LLMs |
+
+### RAG & Vector Databases
+| Tool | Description |
+|------|-------------|
+| **ChromaDB** | Open-source vector database |
+| **Qdrant** | Fast vector search |
+| **Weaviate** | Graph-based vector search |
+| **Milvus** | Scale vector database |
+| **FAISS** | Facebook's vector search |
+
+### Training & Fine-tuning
+| Tool | Description |
+|------|-------------|
+| **DeepSpeed** | Microsoft deep learning optimization |
+| **Megatron-LM** | NVIDIA large-scale training |
+| **TRL** | HuggingFace transformer reinforcement learning |
+| **PEFT** | Parameter-efficient fine-tuning (LoRA, etc.) |
+
+### MLOps & Deployment
+| Tool | Description |
+|------|-------------|
+| **MLflow** | ML lifecycle management |
+| **Weights & Biases** | Experiment tracking |
+| **TensorBoard** | Visualization |
+| **TorchServe** | PyTorch model serving |
+| **Ray Serve** | Distributed serving |
 
 ---
 
