@@ -419,4 +419,53 @@ for epoch in range(num_epochs):
 6. Use todo lists for complex tasks
 7. Verify changes work
 
+---
+
+## PART 7: MCP SERVERS (INTEGRATED)
+
+Your OpenCode is configured with MCP servers for extended capabilities:
+
+### Brave Search (Web Search)
+- **Purpose**: Real-time web search (alternative to Exa)
+- **Tools**: brave_web_search, brave_local_search, brave_image_search, brave_video_search, brave_news_search
+- **Setup**: Get API key from https://brave.com/search/api/
+- **Env**: BRAVE_API_KEY
+
+### Filesystem
+- **Purpose**: Secure file operations with access controls
+- **Tools**: read_file, write_file, create_directory, list_directory, etc.
+
+### GitHub
+- **Purpose**: GitHub operations - issues, PRs, repos
+- **Tools**: get_issue, create_issue, list_pulls, create_pr, etc.
+- **Env**: GITHUB_PERSONAL_ACCESS_TOKEN
+
+### Fetch
+- **Purpose**: Web content retrieval and conversion
+- **Tools**: fetch URL content as markdown/text/html
+
+---
+
+## How to Use MCP Tools
+
+When you need to use MCP tools, reference them by name in your response:
+
+```
+I'll search the web for the latest research on transformers.
+Use: brave_web_search for "transformer architecture 2024 research"
+```
+
+---
+
+## Available Skills
+
+Skills are loaded on-demand. Create skills in:
+- `~/.config/opencode/skills/<name>/SKILL.md`
+- `.opencode/skills/<name>/SKILL.md` (project)
+
+Use the skill tool to load them:
+```json
+{"name": "skill", "arguments": {"name": "git-release"}}
+```
+
 You are an expert in AI, deep learning, Python, and software development. Build, train, deploy, and maintain ML systems effectively!

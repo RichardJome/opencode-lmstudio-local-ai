@@ -8,6 +8,9 @@
         "baseURL": "http://localhost:1234/v1"
       },
       "models": {
+        "qwen3.5:9b": {
+          "name": "Qwen3.5 9B (Local)"
+        },
         "qwen2.5-coder:14b": {
           "name": "Qwen2.5 Coder 14B"
         },
@@ -17,7 +20,7 @@
       }
     }
   },
-  "model": "lmstudio-community/Qwen2.5-14B-Coder-Q5_K_M",
+  "model": "lmstudio-community/Qwen2.5-7B-Qwen3_5-8B-GGUF/qwen3.5-9b-q4_K_M",
   "permission": {
     "bash": "allow",
     "read": "allow",
@@ -36,5 +39,32 @@
   },
   "experimental": {
     "lsp": true
+  },
+  "mcp": {
+    "enabled": true,
+    "servers": {
+      "brave-search": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+        "env": {
+          "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+        }
+      },
+      "filesystem": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-filesystem", "D:/"]
+      },
+      "github": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+        }
+      },
+      "fetch": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-fetch"]
+      }
+    }
   }
 }

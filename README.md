@@ -1,15 +1,16 @@
 # OpenCode Local Setup with LM Studio
 
-This directory contains essential configuration files to set up OpenCode with a local Qwen model using LM Studio.
+This directory contains essential configuration files to set up OpenCode with a local Qwen3.5:9b model using LM Studio.
 
 ## Files Included
 
 | File | Purpose |
 |------|---------|
-| `opencode.json` | Main configuration for LM Studio + Qwen |
+| `opencode.json` | Main configuration for LM Studio + Qwen3.5:9b + MCPs |
 | `SYSTEM_PROMPT.md` | Comprehensive tool usage & AI knowledge |
 | `AGENTS.md` | OpenCode project rules |
 | `QUICK_REFERENCE.md` | Quick tool call format reference |
+| `.opencode/skills/` | Pre-configured skills for DL, RAG, GitHub, Web Search |
 | `README.md` | This setup guide |
 
 ---
@@ -20,26 +21,35 @@ This directory contains essential configuration files to set up OpenCode with a 
 
 - **OpenCode installed**: `npm install -g opencode`
 - **LM Studio installed**: https://lmstudio.ai
-- **Qwen model downloaded**: Search and download in LM Studio
+- **Qwen3.5:9b model downloaded**: Search "qwen3.5 9b" in LM Studio
 
 ### 2. Configure LM Studio
 
 1. Open LM Studio
-2. Search for and download a Qwen model:
-   - `Qwen2.5-Coder-14B` (recommended for coding)
-   - `Qwen2.5-7B` (faster, less VRAM)
-   - `Qwen3-14B` (latest, strong reasoning)
+2. Search for and download: `Qwen2.5 7B Qwen3.5` or `Qwen3.5 9B`
 3. Click "Start Server" or use the chat UI
 4. **Important**: Set context length to at least 16384 (16K) or higher
 5. Server runs at `http://localhost:1234/v1`
 
-### 3. Copy Configuration
+### 3. Set Environment Variables
+
+```cmd
+REM Windows - Create or edit %USERPROFILE%\.bashrc or use system settings
+set BRAVE_API_KEY=your_brave_api_key
+set GITHUB_TOKEN=your_github_token
+```
+
+Get Brave API key: https://brave.com/search/api/
+Get GitHub token: https://github.com/settings/tokens
+
+### 4. Copy Configuration
 
 ```cmd
 REM Windows
-copy opencode.json %USERPROFILE%\.config\opencode\opencode.json
-copy SYSTEM_PROMPT.md %USERPROFILE%\.config\opencode\SYSTEM_PROMPT.md
-copy AGENTS.md %USERPROFILE%\.config\opencode\AGENTS.md
+xcopy /E /I opencode.json %USERPROFILE%\.config\opencode\
+xcopy /E /I SYSTEM_PROMPT.md %USERPROFILE%\.config\opencode\
+xcopy /E /I AGENTS.md %USERPROFILE%\.config\opencode\
+xcopy /E /I .opencode %USERPROFILE%\.config\opencode\
 ```
 
 ```bash
@@ -177,38 +187,96 @@ opencode
 
 ---
 
-## Advanced: Adding MCP Servers
+## MCP Servers Included
 
-Add MCP servers to `opencode.json`:
+This setup includes these MCP servers pre-configured:
 
-```json
-{
-  "mcp": {
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
-      }
-    },
-    "filesystem": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed"]
-    }
-  }
-}
+| Server | Purpose | API Key Required |
+|--------|---------|------------------|
+| **brave-search** | Web search (your Exa alternative!) | Yes - brave.com |
+| **filesystem** | File operations | No |
+| **github** | GitHub operations | Yes - GitHub token |
+| **fetch** | Web content retrieval | No |
+
+### Brave Search Setup (Exa Alternative!)
+
+**Get your free API key:**
+1. Go to https://brave.com/search/api/
+2. Sign up for account
+3. Generate API key
+4. Set environment variable:
+
+```cmd
+set BRAVE_API_KEY=your_api_key_here
 ```
 
-### Popular MCP Servers
+**What it provides:**
+- `brave_web_search` - General web search
+- `brave_local_search` - Local business search  
+- `brave_image_search` - Image search
+- `brave_video_search` - Video search
+- `brave_news_search` - News search
 
-| Server | Purpose |
-|--------|---------|
-| github | GitHub operations |
-| filesystem | File access |
-| fetch | Web content |
-| brave-search | Web search |
-| slack | Slack integration |
-| postgres | Database queries |
+This is the BEST alternative to Exa for local AI!
+
+### GitHub Setup
+
+```cmd
+set GITHUB_TOKEN=your_github_token
+```
+
+Get token: https://github.com/settings/tokens (repo scope)
+
+---
+
+## Skills Included
+
+Pre-configured skills in `.opencode/skills/`:
+
+| Skill | Purpose |
+|-------|---------|
+| `deep-learning-setup` | PyTorch, TensorFlow, CUDA setup |
+| `rag-setup` | RAG pipeline with LangChain |
+| `github-operations` | Issues, PRs, releases |
+| `web-search` | Brave Search usage guide |
+| `mlops-deployment` | Docker, MLflow, serving |
+
+---
+
+## More MCP Servers You Can Add
+
+### Development
+| Server | Purpose | Command |
+|--------|---------|---------|
+| `gitlab` | GitLab operations | npx @modelcontextprotocol/server-gitlab |
+| `sentry` | Error monitoring | npx @modelcontextprotocol/server-sentry |
+| `linear` | Project management | npx @modelcontextprotocol/server-linear |
+| `notion` | Notion workspace | npx @modelcontextprotocol/server-notion |
+
+### Data & Database
+| Server | Purpose | Command |
+|--------|---------|---------|
+| `postgres` | PostgreSQL queries | npx @modelcontextprotocol/server-postgres |
+| `mysql` | MySQL queries | npx @modelcontextprotocol/server-mysql |
+| `sqlite` | SQLite queries | npx @modelcontextprotocol/server-sqlite |
+
+### Browser & Automation
+| Server | Purpose | Command |
+|--------|---------|---------|
+| `playwright` | Browser automation | npx @modelcontextprotocol/server-playwright |
+| `puppeteer` | Chrome automation | npx @modelcontextprotocol/server-puppeteer |
+
+### AI & ML
+| Server | Purpose | Command |
+|--------|---------|---------|
+| `aws-kb` | AWS knowledge base | npx @modelcontextprotocol/server-aws-kb-retrieval |
+| `memory` | Persistent memory | npx @modelcontextprotocol/server-memory |
+
+### Search
+| Server | Purpose | Command |
+|--------|---------|---------|
+| `brave-search` | Brave web search | npx @modelcontextprotocol/server-brave-search |
+| `serpapi` | Google search | npx @serpapi/server-serpapi |
 
 ---
 
