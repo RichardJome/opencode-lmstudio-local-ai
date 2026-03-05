@@ -41,35 +41,32 @@
     "lsp": true
   },
   "mcp": {
-    "enabled": true,
-    "servers": {
-      "web-search": {
-        "command": "npx",
-        "args": ["-y", "open-webSearch"]
-      },
-      "filesystem": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-filesystem", "D:/"]
-      },
-      "github": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-github"],
-        "env": {
-          "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
-        }
-      },
-      "fetch": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-fetch"]
-      },
-      "sqlite": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-sqlite"]
-      },
-      "memory": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-memory"]
+    "web-search": {
+      "type": "local",
+      "command": ["npx", "-y", "@oevortex/ddg_search"]
+    },
+    "filesystem": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "D:/"]
+    },
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}"
       }
+    },
+    "fetch": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-fetch"]
+    },
+    "sqlite": {
+      "type": "local",
+      "command": ["npx", "-y", "mcp-sqlite", "mydatabase.db"]
+    },
+    "memory": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-memory"]
     }
   }
 }
